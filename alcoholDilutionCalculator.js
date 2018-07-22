@@ -14,7 +14,7 @@ var Form = function (_React$Component) {
 
     var _this = _possibleConstructorReturn(this, (Form.__proto__ || Object.getPrototypeOf(Form)).call(this, props));
 
-    _this.state = { m1: '', sp: '', ep: '' };
+    _this.state = { ml: '', sp: '', ep: '' };
 
     _this.onMlChange = _this.onMlChange.bind(_this);
     _this.onSpChange = _this.onSpChange.bind(_this);
@@ -72,7 +72,7 @@ var Form = function (_React$Component) {
             'label',
             null,
             React.createElement('input', { size: '35', type: 'text', name: 'ml', value: this.state.ml,
-              onChange: this.onMlChange })
+              onChange: this.onMlChange, placeholder: '\u0412 \u043B\u0438\u0442\u0440\u0435 - 1000 \u043C\u043B.' })
           )
         ),
         React.createElement(
@@ -84,7 +84,7 @@ var Form = function (_React$Component) {
             'label',
             null,
             React.createElement('input', { size: '35', type: 'text', name: 'sp', value: this.state.sp,
-              onChange: this.onSpChange })
+              onChange: this.onSpChange, placeholder: '\u041E\u0442 95 \u0434\u043E 50' })
           )
         ),
         React.createElement(
@@ -96,7 +96,7 @@ var Form = function (_React$Component) {
             'label',
             null,
             React.createElement('input', { size: '35', type: 'text', name: 'ep', value: this.state.ep,
-              onChange: this.onEpChange })
+              onChange: this.onEpChange, placeholder: '\u041E\u0442 90 \u0434\u043E 15' })
           )
         ),
         React.createElement(
@@ -119,15 +119,51 @@ var out = function out(mess) {
   res.innerHTML = mess;
 };
 
-var Fertman = [[6.4, 13.3, 20.9, 29.5, 39.1, 50.1, 67.9, 78, 96, 117.2, 144.4, 178.7, 224.1, 278.1, 382, 540], // for 95 persent with step 5 degrees
-[6.6, 13.8, 21.8, 31, 41.4, 53.7, 67.8, 84.7, 105.3, 130.8, 163.3, 206.2, 266.1, 355.8, 505.3], // for 90 persent
-[6.8, 14.5, 23.1, 33, 44.5, 57.9, 73.9, 93.3, 117.3, 148, 188.6, 245.2, 329.8, 471], // for 85 persent
-[7.2, 15.4, 24.7, 35.4, 48.1, 63, 81.2, 104, 132.9, 171.1, 224.3, 304, 436.9], // for 80 persent 
-[7.6, 16.4, 26.5, 38.3, 52.4, 69.5, 90.8, 117.8, 153.6, 203.5, 278.3, 402.8], // for 75 persent 
-[8.2, 17.6, 28.6, 41.7, 57.8, 77.6, 102.8, 136, 182.8, 252.6, 368.8], // for 70 persent 
-[8.8, 19, 31.3, 46, 64.5, 87.9, 118.9, 162.2, 227, 334.9], // for 65 persent 
-[9.5, 20.5, 34.5, 51.4, 73.1, 101.7, 141.7, 201.4, 301.1], // for 60 persent 
-[10.4, 22.9, 38.5, 58.3, 84.5, 121.2, 176, 267.3], // for 55 persent 
-[11.4, 25.6, 43.6, 67.5, 100.7, 150.6, 233.6] // for 50 persent 
+var fertman = [[95, 6.4, 13.3, 20.9, 29.5, 39.1, 50.1, 67.9, 78, 96, 117.2, 144.4, 178.7, 224.1, 278.1, 382, 540], // for 95 persent with step 5 degrees
+[90, 6.6, 13.8, 21.8, 31, 41.4, 53.7, 67.8, 84.7, 105.3, 130.8, 163.3, 206.2, 266.1, 355.8, 505.3], // for 90 persent
+[85, 6.8, 14.5, 23.1, 33, 44.5, 57.9, 73.9, 93.3, 117.3, 148, 188.6, 245.2, 329.8, 471], // for 85 persent
+[80, 7.2, 15.4, 24.7, 35.4, 48.1, 63, 81.2, 104, 132.9, 171.1, 224.3, 304, 436.9], // for 80 persent 
+[75, 7.6, 16.4, 26.5, 38.3, 52.4, 69.5, 90.8, 117.8, 153.6, 203.5, 278.3, 402.8], // for 75 persent 
+[70, 8.2, 17.6, 28.6, 41.7, 57.8, 77.6, 102.8, 136, 182.8, 252.6, 368.8], // for 70 persent 
+[65, 8.8, 19, 31.3, 46, 64.5, 87.9, 118.9, 162.2, 227, 334.9], // for 65 persent 
+[60, 9.5, 20.5, 34.5, 51.4, 73.1, 101.7, 141.7, 201.4, 301.1], // for 60 persent 
+[55, 10.4, 22.9, 38.5, 58.3, 84.5, 121.2, 176, 267.3], // for 55 persent 
+[50, 11.4, 25.6, 43.6, 67.5, 100.7, 150.6, 233.6] // for 50 persent 
 ];
-// alert(Fertman[0][1]);
+
+var calc = function calc(start, end) {
+  var flagS = false;
+  var flagE = false;
+  if (start % 5 === 0) {
+    flagS = true;
+  }
+  if (end % 5 === 0) {
+    flagE = true;
+  }
+  var sTail = start % 5; // correction factor
+  var sHead = start - sTail; // row's head
+  var eTail = end % 5; // correction factor
+  var eHead = end - eTail; // integer value of second percent (with step 5%)
+  var sShift = (95 - sHead) / 5; // row index in the array
+  var eShift = (sHead - eHead) / 5; // element index in the row
+
+  // console.log(sHead, sTail, eHead, eTail, sShift, eShift);
+  var letValue = function letValue(row, pos) {
+    return fertman[row][pos];
+  };
+  var baseValue = letValue(sShift, eShift);
+  if (flagS && flagE) {
+    return baseValue;
+  } else if (flagS && !flagE) {
+    if (eShift !== 1) {
+      var preValue = letValue(sShift, eShift - 1);
+      delta = (baseValue - preValue) * (eTail / 5); // '/5' - because diapason's step = 5%
+    } else {
+      delta = baseValue * (eTail / 5); // for first diapason
+    }
+    console.log(delta);
+    return baseValue - delta;
+  }
+};
+var fp = calc(90, 87.5);
+console.log(fp);

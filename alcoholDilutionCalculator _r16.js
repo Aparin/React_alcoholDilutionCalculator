@@ -1,9 +1,7 @@
-
-  
-  class Form extends React.Component {
+class Form extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {m1: '', sp: '', ep: ''};
+      this.state = {ml: '', sp: '', ep: ''};
 
       this.onMlChange = this.onMlChange.bind(this);
       this.onSpChange = this.onSpChange.bind(this);
@@ -42,13 +40,13 @@
           <h2>Калькулятор разбавления спирта</h2>
           <p>Введите объём спирта в миллилитрах: <br />
           <label><input size='35' type="text" name="ml" value={this.state.ml}
-                           onChange={this.onMlChange}/></label></p>
+                           onChange={this.onMlChange} placeholder="В литре - 1000 мл." /></label></p>
           <p>Введите % начальной крепости спирта: <br />
             <label><input size='35' type="text" name="sp" value={this.state.sp}
-                            onChange={this.onSpChange}/></label></p>
+                            onChange={this.onSpChange} placeholder="От 95 до 50"/></label></p>
           <p>Введите нужный % крепости: <br />
             <label><input size='35' type="text" name="ep" value={this.state.ep}
-                            onChange={this.onEpChange}/></label></p>
+                            onChange={this.onEpChange} placeholder="От 90 до 15" /></label></p>
           <p><input type="submit" value="Посчитать" /></p>
         </form>
       );
@@ -63,16 +61,47 @@ ReactDOM.render (<Form />, area);
     res.innerHTML = mess;
   }
   
-  const Fertman = [
-    [6.4, 13.3, 20.9, 29.5, 39.1, 50.1, 67.9, 78, 96, 117.2, 144.4, 178.7, 224.1, 278.1, 382, 540], // for 95 persent with step 5 degrees
-    [6.6, 13.8, 21.8, 31, 41.4, 53.7, 67.8, 84.7, 105.3, 130.8, 163.3, 206.2, 266.1, 355.8, 505.3], // for 90 persent
-    [6.8, 14.5, 23.1, 33, 44.5, 57.9, 73.9, 93.3, 117.3, 148, 188.6, 245.2, 329.8, 471], // for 85 persent
-    [7.2, 15.4, 24.7, 35.4, 48.1, 63, 81.2, 104, 132.9, 171.1, 224.3, 304, 436.9], // for 80 persent 
-    [7.6, 16.4, 26.5, 38.3, 52.4, 69.5, 90.8, 117.8, 153.6, 203.5, 278.3, 402.8], // for 75 persent 
-    [8.2, 17.6, 28.6, 41.7, 57.8, 77.6, 102.8, 136, 182.8, 252.6, 368.8], // for 70 persent 
-    [8.8, 19, 31.3, 46, 64.5, 87.9, 118.9, 162.2, 227, 334.9], // for 65 persent 
-    [9.5, 20.5, 34.5, 51.4, 73.1, 101.7, 141.7, 201.4, 301.1], // for 60 persent 
-    [10.4, 22.9, 38.5, 58.3, 84.5, 121.2, 176, 267.3], // for 55 persent 
-    [11.4, 25.6, 43.6, 67.5, 100.7, 150.6, 233.6] // for 50 persent 
+  const fertman = [
+    [95, 6.4, 13.3, 20.9, 29.5, 39.1, 50.1, 67.9, 78, 96, 117.2, 144.4, 178.7, 224.1, 278.1, 382, 540], // for 95 persent with step 5 degrees
+    [90, 6.6, 13.8, 21.8, 31, 41.4, 53.7, 67.8, 84.7, 105.3, 130.8, 163.3, 206.2, 266.1, 355.8, 505.3], // for 90 persent
+    [85, 6.8, 14.5, 23.1, 33, 44.5, 57.9, 73.9, 93.3, 117.3, 148, 188.6, 245.2, 329.8, 471], // for 85 persent
+    [80, 7.2, 15.4, 24.7, 35.4, 48.1, 63, 81.2, 104, 132.9, 171.1, 224.3, 304, 436.9], // for 80 persent 
+    [75, 7.6, 16.4, 26.5, 38.3, 52.4, 69.5, 90.8, 117.8, 153.6, 203.5, 278.3, 402.8], // for 75 persent 
+    [70, 8.2, 17.6, 28.6, 41.7, 57.8, 77.6, 102.8, 136, 182.8, 252.6, 368.8], // for 70 persent 
+    [65, 8.8, 19, 31.3, 46, 64.5, 87.9, 118.9, 162.2, 227, 334.9], // for 65 persent 
+    [60, 9.5, 20.5, 34.5, 51.4, 73.1, 101.7, 141.7, 201.4, 301.1], // for 60 persent 
+    [55, 10.4, 22.9, 38.5, 58.3, 84.5, 121.2, 176, 267.3], // for 55 persent 
+    [50, 11.4, 25.6, 43.6, 67.5, 100.7, 150.6, 233.6] // for 50 persent 
   ];
-// alert(Fertman[0][1]);
+
+const calc = (start, end) => {
+  let flagS = false;
+  let flagE = false;
+  if (start % 5 === 0) {flagS = true;}
+  if (end % 5 === 0) {flagE = true;}
+  const sTail = start % 5; // correction factor
+  const sHead = start - sTail; // row's head
+  const eTail = end % 5; // correction factor
+  const eHead = end - eTail; // integer value of second percent (with step 5%)
+  const sShift = (95 - sHead) / 5; // row index in the array
+  const eShift = (sHead - eHead) / 5; // element index in the row
+  
+  // console.log(sHead, sTail, eHead, eTail, sShift, eShift);
+  const letValue = (row, pos) => {
+    return fertman[row][pos];
+  }
+ const baseValue = letValue(sShift, eShift);
+ if (flagS && flagE) {return baseValue}
+ else if (flagS && !flagE) {
+   if (eShift !== 1) {
+     const preValue = letValue(sShift, eShift - 1);
+     delta = (baseValue - preValue) * (eTail / 5); // '/5' - because diapason's step = 5%
+   }
+   else {delta = baseValue  * (eTail / 5); // for first diapason
+        }
+   console.log(delta);
+   return  baseValue - delta; 
+ }
+}
+const fp = calc(90, 87.5);
+console.log(fp);

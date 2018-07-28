@@ -1,1 +1,1 @@
-Alcohol dilution calculater for 'Drrrik.ru'
+Alcohol dilution calculater for 'Drrrik.ru'. Works here: https://drrrink.ru/kalkulyator-razbavleniya-spirta.html

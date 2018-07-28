@@ -15,7 +15,7 @@ class Form extends React.Component {
       const ep = Number(this.state.ep);
       
       if (ml === 0 || sp === 0 || ep === 0) {
-        out(`<p style='color:red'>Введите все значения, сейчас ml = ${ml}, sp = ${sp}, ep = ${ep}</p>`);
+        out(`<p style='color:red'>Введите все значения, сейчас объём = ${ml}, начальная крепость = ${sp}, конечная крепость = ${ep}</p>`);
       }
       else if (ml !== Number(ml) || sp !== Number(sp) || ep !== Number(ep) ) {out(`<p style='color:red'>Все значения дожны быть числами. Десятичные значения пишите через точку</p>`);}
       else if (sp > 100 || ep > 100 || sp <= 0 || ep <= 0) out(`<p style='color:red'>Концентрация не может быть больше 100%, а также меньше или равно 0!</p>`);
@@ -47,7 +47,7 @@ class Form extends React.Component {
           <p>Введите нужный % крепости: <br />
             <label><input size='35' type="text" name="ep" value={this.state.ep}
                             onChange={this.onEpChange} placeholder="От 90 до 15" /></label></p>
-          <p><input type="submit" value="Посчитать" /></p>
+          <p><input type="submit" value="Рассчитать" /></p>
         </form>
       );
     }

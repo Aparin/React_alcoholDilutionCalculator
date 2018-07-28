@@ -15,11 +15,11 @@ class Form extends React.Component {
       const ep = Number(this.state.ep);
       
       if (ml === 0 || sp === 0 || ep === 0) {
-        out(`<p style='color:red'>Введите все значения, сейчас ml = ${ml}, sp = ${sp}, ep = ${ep}</p>`);
+        out(`<p style='color:red'>Р’РІРµРґРёС‚Рµ РІСЃРµ Р·РЅР°С‡РµРЅРёСЏ, СЃРµР№С‡Р°СЃ ml = ${ml}, sp = ${sp}, ep = ${ep}</p>`);
       }
-      else if (ml !== Number(ml) || sp !== Number(sp) || ep !== Number(ep) ) {out(`<p style='color:red'>Все значения дожны быть числами. Десятичные значения пишите через точку</p>`);}
-      else if (sp > 100 || ep > 100 || sp <= 0 || ep <= 0) out(`<p style='color:red'>Концентрация не может быть больше 100%, а также меньше или равно 0!</p>`);
-      else if (sp <= ep) out(`<p style='color:red'>Начальная крепость не может быть меньше или равной конечной!</p>`);
+      else if (ml !== Number(ml) || sp !== Number(sp) || ep !== Number(ep) ) {out(`<p style='color:red'>Р’СЃРµ Р·РЅР°С‡РµРЅРёСЏ РґРѕР¶РЅС‹ Р±С‹С‚СЊ С‡РёСЃР»Р°РјРё. Р”РµСЃСЏС‚РёС‡РЅС‹Рµ Р·РЅР°С‡РµРЅРёСЏ РїРёС€РёС‚Рµ С‡РµСЂРµР· С‚РѕС‡РєСѓ</p>`);}
+      else if (sp > 100 || ep > 100 || sp <= 0 || ep <= 0) out(`<p style='color:red'>РљРѕРЅС†РµРЅС‚СЂР°С†РёСЏ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ 100%, Р° С‚Р°РєР¶Рµ РјРµРЅСЊС€Рµ РёР»Рё СЂР°РІРЅРѕ 0!</p>`);
+      else if (sp <= ep) out(`<p style='color:red'>РќР°С‡Р°Р»СЊРЅР°СЏ РєСЂРµРїРѕСЃС‚СЊ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РјРµРЅСЊС€Рµ РёР»Рё СЂР°РІРЅРѕР№ РєРѕРЅРµС‡РЅРѕР№!</p>`);
       else  out(ml + sp + ep); 
       event.preventDefault();
     }
@@ -37,17 +37,17 @@ class Form extends React.Component {
     render() {
       return (
         <form onSubmit={this.onSubmit}>
-          <h2>Калькулятор разбавления спирта</h2>
-          <p>Введите объём спирта в миллилитрах: <br />
+          <h2>РљР°Р»СЊРєСѓР»СЏС‚РѕСЂ СЂР°Р·Р±Р°РІР»РµРЅРёСЏ СЃРїРёСЂС‚Р°</h2>
+          <p>Р’РІРµРґРёС‚Рµ РѕР±СЉС‘Рј СЃРїРёСЂС‚Р° РІ РјРёР»Р»РёР»РёС‚СЂР°С…: <br />
           <label><input size='35' type="text" name="ml" value={this.state.ml}
-                           onChange={this.onMlChange} placeholder="В литре - 1000 мл." /></label></p>
-          <p>Введите % начальной крепости спирта: <br />
+                           onChange={this.onMlChange} placeholder="Р’ Р»РёС‚СЂРµ - 1000 РјР»." /></label></p>
+          <p>Р’РІРµРґРёС‚Рµ % РЅР°С‡Р°Р»СЊРЅРѕР№ РєСЂРµРїРѕСЃС‚Рё СЃРїРёСЂС‚Р°: <br />
             <label><input size='35' type="text" name="sp" value={this.state.sp}
-                            onChange={this.onSpChange} placeholder="От 95 до 50"/></label></p>
-          <p>Введите нужный % крепости: <br />
+                            onChange={this.onSpChange} placeholder="РћС‚ 95 РґРѕ 50"/></label></p>
+          <p>Р’РІРµРґРёС‚Рµ РЅСѓР¶РЅС‹Р№ % РєСЂРµРїРѕСЃС‚Рё: <br />
             <label><input size='35' type="text" name="ep" value={this.state.ep}
-                            onChange={this.onEpChange} placeholder="От 90 до 15" /></label></p>
-          <p><input type="submit" value="Посчитать" /></p>
+                            onChange={this.onEpChange} placeholder="РћС‚ 90 РґРѕ 15" /></label></p>
+          <p><input type="submit" value="РџРѕСЃС‡РёС‚Р°С‚СЊ" /></p>
         </form>
       );
     }
@@ -62,16 +62,16 @@ ReactDOM.render (<Form />, area);
   }
   
   const fertman = [
-    [95, 0, 6.4, 13.3, 20.9, 29.5, 39.1, 50.1, 67.9, 78, 96, 117.2, 144.4, 178.7, 224.1, 278.1, 382, 540], // for 95 persent with step 5 degrees
-    [90, 0, 0, 6.6, 13.8, 21.8, 31, 41.4, 53.7, 67.8, 84.7, 105.3, 130.8, 163.3, 206.2, 266.1, 355.8, 505.3], // for 90 persent
-    [85, 0, 0, 0, 6.8, 14.5, 23.1, 33, 44.5, 57.9, 73.9, 93.3, 117.3, 148, 188.6, 245.2, 329.8, 471], // for 85 persent
-    [80, 0, 0, 0, 0, 7.2, 15.4, 24.7, 35.4, 48.1, 63, 81.2, 104, 132.9, 171.1, 224.3, 304, 436.9], // for 80 persent 
-    [75, 0, 0, 0, 0, 0, 7.6, 16.4, 26.5, 38.3, 52.4, 69.5, 90.8, 117.8, 153.6, 203.5, 278.3, 402.8], // for 75 persent 
-    [70, 0, 0, 0, 0, 0, 0, 8.2, 17.6, 28.6, 41.7, 57.8, 77.6, 102.8, 136, 182.8, 252.6, 368.8], // for 70 persent 
-    [65, 0, 0, 0, 0, 0, 0, 0, 8.8, 19, 31.3, 46, 64.5, 87.9, 118.9, 162.2, 227, 334.9], // for 65 persent 
-    [60, 0, 0, 0, 0, 0, 0, 0, 0, 9.5, 20.5, 34.5, 51.4, 73.1, 101.7, 141.7, 201.4, 301.1], // for 60 persent 
-    [55, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10.4, 22.9, 38.5, 58.3, 84.5, 121.2, 176, 267.3], // for 55 persent 
-    [50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11.4, 25.6, 43.6, 67.5, 100.7, 150.6, 233.6] // for 50 persent 
+    [95, 6.4, 13.3, 20.9, 29.5, 39.1, 50.1, 67.9, 78, 96, 117.2, 144.4, 178.7, 224.1, 278.1, 382, 540], // for 95 persent with step 5 degrees
+    [90, 0, 6.6, 13.8, 21.8, 31, 41.4, 53.7, 67.8, 84.7, 105.3, 130.8, 163.3, 206.2, 266.1, 355.8, 505.3], // for 90 persent
+    [85, 0, 0, 6.8, 14.5, 23.1, 33, 44.5, 57.9, 73.9, 93.3, 117.3, 148, 188.6, 245.2, 329.8, 471], // for 85 persent
+    [80, 0, 0, 0, 7.2, 15.4, 24.7, 35.4, 48.1, 63, 81.2, 104, 132.9, 171.1, 224.3, 304, 436.9], // for 80 persent 
+    [75, 0, 0, 0, 0, 7.6, 16.4, 26.5, 38.3, 52.4, 69.5, 90.8, 117.8, 153.6, 203.5, 278.3, 402.8], // for 75 persent 
+    [70, 0, 0, 0, 0, 0, 8.2, 17.6, 28.6, 41.7, 57.8, 77.6, 102.8, 136, 182.8, 252.6, 368.8], // for 70 persent 
+    [65, 0, 0, 0, 0, 0, 0, 8.8, 19, 31.3, 46, 64.5, 87.9, 118.9, 162.2, 227, 334.9], // for 65 persent 
+    [60, 0, 0, 0, 0, 0, 0, 0, 9.5, 20.5, 34.5, 51.4, 73.1, 101.7, 141.7, 201.4, 301.1], // for 60 persent 
+    [55, 0, 0, 0, 0, 0, 0, 0, 0, 10.4, 22.9, 38.5, 58.3, 84.5, 121.2, 176, 267.3], // for 55 persent 
+    [50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11.4, 25.6, 43.6, 67.5, 100.7, 150.6, 233.6] // for 50 persent 
   ];
 /* Format's control
 for (let i = 0; i < fertman.length; i++) {
@@ -84,12 +84,33 @@ const calc = (start, end) => {
   let flagE = false;
   if (start % 5 === 0) {flagS = true;}
   if (end % 5 === 0) {flagE = true;}
+  
   const sTail = start % 5; // correction factor
   const sHead = start - sTail; // row's head
   const eTail = end % 5; // correction factor
   const eHead = end - eTail; // integer value of second percent (with step 5%)
   const sShift = (95 - sHead) / 5; // row index in the array
-  const eShift = (sHead - eHead) / 5; // element index in the row
+  const eShift = (95 - eHead) / 5; // element index in the row
+  console.log(`sHead = ${sHead}, sTail = ${sTail}, eHead = ${eHead}, eTail = ${eTail}, sShift = ${sShift}, eShift = ${eShift}`);
+  
+  let selector; 
+  if (flagS && flagE) selector = 1;
+  if (flagS && !flagE) selector = 2;
+  if (!flagS && flagE) selector = 3;
+  if (!flagS && !flagE) selector = 4;
+  console.log(`selector = ${selector}`);
+  
+  const letValue = (row, pos) => { // obtaining a single value
+    return fertman[row][pos];
+  }
+  
+  switch(selector) {
+      case 1 : 
+      return letValue(sShift, eShift);
+      break;
+  }
+  /*
+
   const letValue = (row, pos) => { // obtaining a single value
     return fertman[row][pos];
   }
@@ -119,7 +140,7 @@ const calc = (start, end) => {
    else {
      
    }
- }
+ }*/
 }
-const fp = calc(84, 70);
+const fp = calc(95, 85);
 console.log(fp);

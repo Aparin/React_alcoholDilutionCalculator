@@ -91,56 +91,45 @@ var calc = function calc(start, end) {
   var eHead = end - eTail; // integer value of second percent (with step 5%)
   var sShift = (95 - sHead) / 5; // row index in the array
   var eShift = (95 - eHead) / 5; // element index in the row
-  console.log('sHead = ' + sHead + ', sTail = ' + sTail + ', eHead = ' + eHead + ', eTail = ' + eTail + ', sShift = ' + sShift + ', eShift = ' + eShift);
+  var corFactor = eTail / 5;
+  console.log('sHead = ' + sHead + ', sTail = ' + sTail + ', eHead = ' + eHead + ', eTail = ' + eTail + ', sShift = ' + sShift + ', eShift = ' + eShift + ', corFactor = ' + corFactor);
 
   var selector = void 0;
   if (flagS && flagE) selector = 1;
   if (flagS && !flagE) selector = 2;
   if (!flagS && flagE) selector = 3;
   if (!flagS && !flagE) selector = 4;
-  console.log('selector = ' + selector);
+  // console.log(`selector = ${selector}`);
 
-  var letValue = function letValue(row, pos) {// obtaining a single value
+  function letValue(row, pos) {// obtaining a single value
     return fertman[row][pos];
-  };
+  }
+
+  function calcValInDiapason(sShift, eShift, corFactor) {
+    var v1 = letValue(sShift, eShift);
+    var v2 = letValue(sShift, eShift - 1);
+    console.log('v1 = ' + v1 + ', v2 = ' + v2);
+
+    var res = eShift - sShift === 1 ?
+    v1 * (1 - corFactor) :
+    v1 - (v1 - v2) * corFactor;
+    // console.log(corFactor);
+
+    return res;
+  }
 
   switch (selector) {
     case 1:
       return letValue(sShift, eShift);
+      break;
+
+    case 2:
+      var res = calcValInDiapason(sShift, eShift, corFactor);
+
+      return +res.toFixed(1);
       break;}
 
-  /*
-               const letValue = (row, pos) => { // obtaining a single value
-                return fertman[row][pos];
-              }
-              const baseValue = letValue(sShift, eShift);
-              
-              console.log(sShift, eShift, baseValue);
-              
-              if (flagS && flagE) {return baseValue} // >> simple first and second percents
-              else if (flagS && !flagE) { // >> simple first persent and second within range
-               if (eShift !== 1) {
-                 const preValue = letValue(sShift, eShift - 1);
-                 delta = (baseValue - preValue) * (eTail / 5); // '/5' - because diapason's step = 5%
-               }
-               else {delta = baseValue  * (eTail / 5); // for first diapason
-                    }
-               return  baseValue - delta; 
-              }
-              else if (!flagS && flagE) { // >> simple second persent and first within range
-               // console.log(sShift, eShift, baseValue);
-               if (eShift === 0) {
-                 const val1 = letValue(sShift, 1);
-                 const val2 = letValue(sShift - 1, 1);
-                 const delta = (val1 - val2) * (sTail / 5);
-                 // console.log('val1 = ' + val1 + ' val2 = ' + val2 + ' delta = ' + delta);
-                 return val1 - delta;
-               }
-               else {
-                 
-               }
-              }*/
-
 };
-var fp = calc(95, 85);
-console.log(fp);
+console.log(calc(95, 94));
+//console.log(calc(65,19));
+//console.log(calc(50, 16));

@@ -20,7 +20,7 @@
       if (ml !== Number(ml) || sp !== Number(sp) || ep !== Number(ep)) {out('<p style=\'color:red\'>\u0412\u0441\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F \u0434\u043E\u0436\u043D\u044B \u0431\u044B\u0442\u044C \u0447\u0438\u0441\u043B\u0430\u043C\u0438. \u0414\u0435\u0441\u044F\u0442\u0438\u0447\u043D\u044B\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u0438\u044F \u043F\u0438\u0448\u0438\u0442\u0435 \u0447\u0435\u0440\u0435\u0437 \u0442\u043E\u0447\u043A\u0443</p>');} else
       if (sp > 100 || ep > 100 || sp <= 0 || ep <= 0) out('<p style=\'color:red\'>\u041A\u043E\u043D\u0446\u0435\u043D\u0442\u0440\u0430\u0446\u0438\u044F \u043D\u0435 \u043C\u043E\u0436\u0435\u0442 \u0431\u044B\u0442\u044C \u0431\u043E\u043B\u044C\u0448\u0435 100%, \u0430 \u0442\u0430\u043A\u0436\u0435 \u043C\u0435\u043D\u044C\u0448\u0435 \u0438\u043B\u0438 \u0440\u0430\u0432\u043D\u043E 0!</p>');else
       if (sp <= ep) out('<p style=\'color:red\'>\u041D\u0430\u0447\u0430\u043B\u044C\u043D\u0430\u044F \u043A\u0440\u0435\u043F\u043E\u0441\u0442\u044C \u043D\u0435 \u043C\u043E\u0436\u0435\u0442 \u0431\u044B\u0442\u044C \u043C\u0435\u043D\u044C\u0448\u0435 \u0438\u043B\u0438 \u0440\u0430\u0432\u043D\u043E\u0439 \u043A\u043E\u043D\u0435\u0447\u043D\u043E\u0439!</p>');else
-      out(ml + sp + ep);
+      out('<div>\u0412\u043B\u0435\u0439\u0442\u0435 \u0432\u0430\u0448 \u0441\u043F\u0438\u0440\u0442 \u0432 ' + ml / 100 * calc(sp, ep) + ' \u043C\u043B. \u0432\u043E\u0434\u044B</div>');
       event.preventDefault();
     } }, { key: 'onMlChange', value: function onMlChange(
 
@@ -145,7 +145,7 @@ var calc = function calc(start, end) {
       if (!(sShift === 1 && eShift === 1)) {
         var hDiapason1 = calcValueInHorisontalDiapason(sShift - 1, eShift, hCorFactor);
         var hDiapason2 = calcValueInHorisontalDiapason(sShift, eShift, hCorFactor);
-        console.log('hDiapason1 = ' + hDiapason1 + ', hDiapason2 = ' + hDiapason2);
+        // console.log(`hDiapason1 = ${hDiapason1}, hDiapason2 = ${hDiapason2}`);
         var res = hDiapason1 - (hDiapason1 - hDiapason2) * vCorFactor;
         return +res.toFixed(1);
       } else
@@ -155,4 +155,4 @@ var calc = function calc(start, end) {
       break;}
 
 };
-console.log(calc(94, 91));
+// console.log(calc(94, 91));

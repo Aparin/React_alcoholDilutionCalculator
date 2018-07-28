@@ -20,7 +20,7 @@ class Form extends React.Component {
       else if (ml !== Number(ml) || sp !== Number(sp) || ep !== Number(ep) ) {out(`<p style='color:red'>Все значения дожны быть числами. Десятичные значения пишите через точку</p>`);}
       else if (sp > 100 || ep > 100 || sp <= 0 || ep <= 0) out(`<p style='color:red'>Концентрация не может быть больше 100%, а также меньше или равно 0!</p>`);
       else if (sp <= ep) out(`<p style='color:red'>Начальная крепость не может быть меньше или равной конечной!</p>`);
-      else  out(ml + sp + ep); 
+      else  out(`<div>Влейте ваш спирт в ${ml / 100 * calc(sp, ep)} мл. воды</div>`); 
       event.preventDefault();
     }
 
@@ -145,7 +145,7 @@ const calc = (start, end) => {
       if (!(sShift === 1 && eShift === 1)) {
         const hDiapason1 = calcValueInHorisontalDiapason(sShift - 1, eShift, hCorFactor);
         const hDiapason2 = calcValueInHorisontalDiapason(sShift, eShift, hCorFactor);
-        console.log(`hDiapason1 = ${hDiapason1}, hDiapason2 = ${hDiapason2}`);
+        // console.log(`hDiapason1 = ${hDiapason1}, hDiapason2 = ${hDiapason2}`);
         const res = hDiapason1 - (hDiapason1 - hDiapason2) * vCorFactor;
         return  +(res).toFixed(1);
       }
@@ -155,4 +155,4 @@ const calc = (start, end) => {
       break;
   }
 }
-console.log(calc(94, 91));
+// console.log(calc(94, 91));

@@ -110,7 +110,7 @@ const calc = (start, end) => {
     const v2 = letValue(ss, es - 1);
     // console.log (`v1 = ${v1}, v2 = ${v2}`);
     
-    const res = (eShift - sShift === 1 ) ? 
+    const res = (eShift - sShift === 1) ? 
         v1 * (1 - cf) :
         v1 - (v1 - v2) * cf;
     // console.log(corFactor);
@@ -140,6 +140,19 @@ const calc = (start, end) => {
       case 3 : 
       return  +(calcValueInVerticalDiapason(sShift, eShift, vCorFactor)).toFixed(1);
       break;
+      
+      case 4 : 
+      if (!(sShift === 1 && eShift === 1)) {
+        const hDiapason1 = calcValueInHorisontalDiapason(sShift - 1, eShift, hCorFactor);
+        const hDiapason2 = calcValueInHorisontalDiapason(sShift, eShift, hCorFactor);
+        console.log(`hDiapason1 = ${hDiapason1}, hDiapason2 = ${hDiapason2}`);
+        const res = hDiapason1 - (hDiapason1 - hDiapason2) * vCorFactor;
+        return  +(res).toFixed(1);
+      }
+      else {
+        return  +(6.4 * (start - end) / 5 ).toFixed(1);
+      }
+      break;
   }
 }
-console.log(calc(54, 15));
+console.log(calc(94, 91));

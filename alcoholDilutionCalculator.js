@@ -139,7 +139,20 @@ var calc = function calc(start, end) {
 
     case 3:
       return +calcValueInVerticalDiapason(sShift, eShift, vCorFactor).toFixed(1);
+      break;
+
+    case 4:
+      if (!(sShift === 1 && eShift === 1)) {
+        var hDiapason1 = calcValueInHorisontalDiapason(sShift - 1, eShift, hCorFactor);
+        var hDiapason2 = calcValueInHorisontalDiapason(sShift, eShift, hCorFactor);
+        console.log('hDiapason1 = ' + hDiapason1 + ', hDiapason2 = ' + hDiapason2);
+        var res = hDiapason1 - (hDiapason1 - hDiapason2) * vCorFactor;
+        return +res.toFixed(1);
+      } else
+      {
+        return +(6.4 * (start - end) / 5).toFixed(1);
+      }
       break;}
 
 };
-console.log(calc(54, 15));
+console.log(calc(94, 91));

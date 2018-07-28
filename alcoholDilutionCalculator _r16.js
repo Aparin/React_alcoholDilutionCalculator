@@ -91,30 +91,40 @@ const calc = (start, end) => {
   const eHead = end - eTail; // integer value of second percent (with step 5%)
   const sShift = (95 - sHead) / 5; // row index in the array
   const eShift = (95 - eHead) / 5; // element index in the row
-  const corFactor = eTail / 5;
-  console.log(`sHead = ${sHead}, sTail = ${sTail}, eHead = ${eHead}, eTail = ${eTail}, sShift = ${sShift}, eShift = ${eShift}, corFactor = ${corFactor}`);
+  const hCorFactor = eTail / 5;
+  const vCorFactor = 1 - sTail / 5;
   
   let selector; 
   if (flagS && flagE) selector = 1;
   if (flagS && !flagE) selector = 2;
   if (!flagS && flagE) selector = 3;
   if (!flagS && !flagE) selector = 4;
-  // console.log(`selector = ${selector}`);
+  console.log(`sHead = ${sHead}, sTail = ${sTail}, eHead = ${eHead}, eTail = ${eTail}, sShift = ${sShift}, eShift = ${eShift}, hCorFactor = ${hCorFactor}, vCorFactor = ${vCorFactor}, selector = ${selector}`);
   
   function letValue(row, pos)  { // obtaining a single value
     return fertman[row][pos];
   }
   
-  function calcValInDiapason(sShift, eShift, corFactor) {
-    const v1 = letValue(sShift, eShift);
-    const v2 = letValue(sShift, eShift - 1);
-    console.log (`v1 = ${v1}, v2 = ${v2}`);
+  function calcValueInHorisontalDiapason(ss, es, cf) {
+    const v1 = letValue(ss, es);
+    const v2 = letValue(ss, es - 1);
+    // console.log (`v1 = ${v1}, v2 = ${v2}`);
     
-    let res = (eShift - sShift === 1 ) ? 
-        v1 * (1 - corFactor) :
-        v1 - (v1 - v2) * corFactor;
+    const res = (eShift - sShift === 1 ) ? 
+        v1 * (1 - cf) :
+        v1 - (v1 - v2) * cf;
     // console.log(corFactor);
     
+    return res;
+  }
+  
+  function calcValueInVerticalDiapason(ss, es, cf) {
+    const v1 = letValue(ss - 1, es);
+    const v2 = letValue(ss, es);
+    const res = (sHead - eHead === 0) ? 
+        v1 * cf :
+        v1 - (v1 - v2) * cf;
+    console.log(v1, v2, cf);   
     return res;
   }
   
@@ -124,12 +134,12 @@ const calc = (start, end) => {
       break;
       
       case 2 : 
-      let res = calcValInDiapason(sShift, eShift, corFactor);
-     
-      return +res.toFixed(1);
+      return +(calcValueInHorisontalDiapason(sShift, eShift, hCorFactor)).toFixed(1);
+      break;
+      
+      case 3 : 
+      return  +(calcValueInVerticalDiapason(sShift, eShift, vCorFactor)).toFixed(1);
       break;
   }
 }
-console.log(calc(95, 94));
-//console.log(calc(65,19));
-//console.log(calc(50, 16));
+console.log(calc(54, 15));

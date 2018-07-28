@@ -18,9 +18,9 @@ class Form extends React.Component {
         out(`<p style='color:red'>Введите все значения, сейчас объём = ${ml}, начальная крепость = ${sp}, конечная крепость = ${ep}</p>`);
       }
       else if (ml !== Number(ml) || sp !== Number(sp) || ep !== Number(ep) ) {out(`<p style='color:red'>Все значения дожны быть числами. Десятичные значения пишите через точку</p>`);}
-      else if (sp > 100 || ep > 100 || sp <= 0 || ep <= 0) out(`<p style='color:red'>Концентрация не может быть больше 100%, а также меньше или равно 0!</p>`);
+      else if (sp > 100 || ep > 100 || sp < 50 || ep < 15) out(`<p style='color:red'>Концентрация не может быть больше 100%, а также меньше указанных значений (начальная меньше 50, конечная - меньше 15)!</p>`);
       else if (sp <= ep) out(`<p style='color:red'>Начальная крепость не может быть меньше или равной конечной!</p>`);
-      else  out(`<div>Влейте ваш спирт в ${ml / 100 * calc(sp, ep)} мл. воды</div>`); 
+      else  out(`<div>Влейте в ваш спирт в ${(ml / 100 * calc(sp, ep)).toFixed(1)} мл. воды</div>`); 
       event.preventDefault();
     }
 

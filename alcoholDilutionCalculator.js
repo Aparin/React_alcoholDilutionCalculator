@@ -99,7 +99,7 @@ var calc = function calc(start, end) {
   if (flagS && !flagE) selector = 2;
   if (!flagS && flagE) selector = 3;
   if (!flagS && !flagE) selector = 4;
-  console.log('sHead = ' + sHead + ', sTail = ' + sTail + ', eHead = ' + eHead + ', eTail = ' + eTail + ', sShift = ' + sShift + ', eShift = ' + eShift + ', hCorFactor = ' + hCorFactor + ', vCorFactor = ' + vCorFactor + ', selector = ' + selector);
+  // console.log('sHead = ' + sHead + ', sTail = ' + sTail + ', eHead = ' + eHead + ', eTail = ' + eTail + ', sShift = ' + sShift + ', eShift = ' + eShift + ', hCorFactor = ' + hCorFactor + ', vCorFactor = ' + vCorFactor + ', selector = ' + selector);
 
   function letValue(row, pos) {// obtaining a single value
     return fertman[row][pos];
@@ -124,7 +124,7 @@ var calc = function calc(start, end) {
     var res = sHead - eHead === 0 ?
     v1 * cf :
     v1 - (v1 - v2) * cf;
-    console.log(v1, v2, cf);
+    // console.log(v1, v2, cf);
     return res;
   }
 
